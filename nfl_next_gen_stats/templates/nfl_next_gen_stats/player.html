@@ -4,7 +4,37 @@
         <h1>{{ player.full_name }} NGS Stats</h1>
     </div>
     <div class="player-stats-main">
-        <h2>Passing Stats</h2>
+        <div class="player-stats-passing">
+            <h2>Passing Stats</h2>
+            <!-- TODO: TURN INTO FLEXBOX -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Week</th>
+                        <th>Pos</th>
+                        <th>Team</th>
+                        <th title="Average Time To Throw">ATTT</th>
+                        <th title="Average Completed Air Yards">ACAY</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stat in passing_stats %}
+                        {% if stat.week == 0%}
+                            <tr>
+                                <td>{{ stat.season }}</td>
+                                <td>{{ stat.week }}</td>
+                                <td>{{ stat.position }}</td>
+                                <td>{{ stat.team }}</td>
+                                <td>{{ stat.avg_time_to_throw|floatformat:2 }}</td>
+                                <td>{{ stat.avg_completed_air_yards|floatformat:2 }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
         <h2>Rushing Stats</h2>
         <h2>Receiving Stats</h2>
     </div>
