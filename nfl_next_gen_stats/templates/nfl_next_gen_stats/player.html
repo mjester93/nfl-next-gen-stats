@@ -7,8 +7,8 @@
         <div class="player-stats-passing">
             <h2>Passing Stats</h2>
             <!-- TODO: TURN INTO FLEXBOX -->
-            <table>
-                <thead>
+            <table class="table table-sm">
+                <thead class="text-center">
                     <tr>
                         <th>Year</th>
                         <th>Pos</th>
@@ -34,7 +34,7 @@
                         <th title="Passing Touchdowns">TD</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-center">
                     {% for stat in passing_stats %}
                         {% if stat.week == 0%}
                             <tr>
