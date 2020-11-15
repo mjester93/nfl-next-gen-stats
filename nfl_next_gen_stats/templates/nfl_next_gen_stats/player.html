@@ -11,11 +11,27 @@
                 <thead>
                     <tr>
                         <th>Year</th>
-                        <th>Week</th>
                         <th>Pos</th>
                         <th>Team</th>
+                        <th>Number</th>
                         <th title="Average Time To Throw">ATTT</th>
                         <th title="Average Completed Air Yards">ACAY</th>
+                        <th title="Average Intended Air Yards">AIAY</th>
+                        <th title="Average Air Yards Differential">AAYD</th>
+                        <th title="Aggressiveness">AGG</th>
+                        <th title="Average Air Distance">AAD</th>
+                        <th title="Max Air Distance">MAD</th>
+                        <th title="Max Completed Air Distance">MCAD</th>
+                        <th title="Average Air Yards To Sticks">AAYTS</th>
+                        <th title="Passer Rating">RAT</th>
+                        <th title="Attempts">ATT</th>
+                        <th title="Completions">COMP</th>
+                        <th title="Completion Percentage">COMP%</td>
+                        <th title="Expected Completion Percentage">xCOMP%</td>
+                        <th title="Completion Percentage Above Expectation">+/-</th>
+                        <th title="Passing Yards">Yards</th>
+                        <th title="Interceptions">INT</th>
+                        <th title="Passing Touchdowns">TD</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,11 +39,27 @@
                         {% if stat.week == 0%}
                             <tr>
                                 <td>{{ stat.season }}</td>
-                                <td>{{ stat.week }}</td>
                                 <td>{{ stat.position }}</td>
                                 <td>{{ stat.team }}</td>
+                                <td>{{ stat.player_jersey_number }}</td>
                                 <td>{{ stat.avg_time_to_throw|floatformat:2 }}</td>
                                 <td>{{ stat.avg_completed_air_yards|floatformat:2 }}</td>
+                                <td>{{ stat.avg_intended_air_yards|floatformat:2 }}</td>
+                                <td>{{ stat.avg_air_yards_differential|floatformat:2 }}</td>
+                                <td>{{ stat.aggressiveness|floatformat:2 }}</td>
+                                <td>{{ stat.avg_air_distance|floatformat:2 }}</td>
+                                <td>{{ stat.max_air_distance|floatformat:2 }}</td>
+                                <td>{{ stat.max_completed_air_distance|floatformat:2 }}</td>
+                                <td>{{ stat.avg_air_yards_to_sticks|floatformat:2 }}</td>
+                                <td>{{ stat.passer_rating|floatformat:2 }}</td>
+                                <td>{{ stat.attempts }}</td>
+                                <td>{{ stat.completions }}</td>
+                                <td>{{ stat.completion_percentage|floatformat:2 }}%</td>
+                                <td>{{ stat.expected_completion_percentage|floatformat:2 }}%</td>
+                                <td>{{ stat.completion_percentage_above_expectation|floatformat:2 }}%</td>
+                                <td>{{ stat.pass_yards }}</td>
+                                <td>{{ stat.interceptions }}</td>
+                                <td>{{ stat.pass_touchdowns }}</td>
                             </tr>
                         {% endif %}
                     {% endfor %}
