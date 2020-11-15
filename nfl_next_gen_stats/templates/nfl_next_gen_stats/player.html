@@ -62,14 +62,72 @@
                                 <td>{{ stat.pass_touchdowns }}</td>
                             </tr>
                         {% endif %}
+                    {% empty %}
+                        <th>
+                            <td colspan="22">There are no passing stats for {{ player.full_name }}</td>
+                        </th>
                     {% endfor %}
                 </tbody>
             </table>
         
-            <span>Note: NGS webpage only shows players with a minumum of 75 passing attempts for that season.</span>
+            <p>Note: NGS webpage only shows players with a minumum passing attempts for that season. Please see the NGS website for more details.</p>
         </div>
+
+        <div class="player-stats-rushing">
+            <h2>Rushing Stats</h2>
+            <!-- TODO: TURN INTO FLEXBOX -->
+            <table class="table table-sm">
+                <thead class="text-center">
+                    <tr>
+                        <th>Year</th>
+                        <th>Pos</th>
+                        <th>Team</th>
+                        <th>Number</th>
+                        <th title="Efficiency">EFF</th>
+                        <th title="8+ Defenders In The Box">8+D%</th>
+                        <th title="Average Time Behind Line of Scrimmage">TLOS</th>
+                        <th title="Rushing Attempts">ATT</th>
+                        <th title="Rushing Yards">Yards</th>
+                        <th title="Rushing Touchdowns">TD</th>
+                        <th title="Expected Rushing Yards">xYards</th>
+                        <th title="Rushing Yards Over Expected">RYOE</th>
+                        <th title="Average Rushing Yards">AVG</th>
+                        <th title="Rushing Yards Over Expected Per Attempt">RYOE/ATT</th>
+                        <th title="Rushing Percentage Over Expected">RPOE</td>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    {% for stat in rushing_stats %}
+                        {% if stat.week == 0%}
+                            <tr>
+                                <td>{{ stat.season }}</td>
+                                <td>{{ stat.position }}</td>
+                                <td>{{ stat.team }}</td>
+                                <td>{{ stat.player_jersey_number }}</td>
+                                <td>{{ stat.efficiency|floatformat:2 }}</td>
+                                <td>{{ stat.percent_attempts_gte_eight_defenders|floatformat:2 }}%</td>
+                                <td>{{ stat.avg_time_to_los|floatformat:2 }}</td>
+                                <td>{{ stat.rush_attempts }}</td>
+                                <td>{{ stat.rush_yards }}</td>
+                                <td>{{ stat.rush_touchdowns }}</td>
+                                <td>{{ stat.expected_rush_yards|floatformat:2 }}</td>
+                                <td>{{ stat.rush_yards_over_expected|floatformat:2 }}</td>
+                                <td>{{ stat.avg_rush_yards|floatformat:2 }}</td>
+                                <td>{{ stat.rush_yards_over_expected_per_att|floatformat:2 }}</td>
+                                <td>{% widthratio stat.rush_pct_over_expected 1 100 %}%</td>
+                            </tr>
+                        {% endif %}
+                    {% empty %}
+                        <th>
+                            <td colspan="15">There are no rushing stats for {{ player.full_name }}</td>
+                        </th>
+                    {% endfor %}
+                </tbody>
+            </table>
         
-        <h2>Rushing Stats</h2>
+            <p>Note: NGS webpage only shows players with a minumum rushing attempts for that season. Please see the NGS website for more details.</p>
+        </div>
+
         <h2>Receiving Stats</h2>
     </div>
 {% endblock content %}

@@ -5,7 +5,7 @@ from .models import *
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
     list_display = ('id', 'first_name', 'last_name', 'full_name', 'short_name', 'gsis_id')
-    search_fields = ("name", )
+    search_fields = ("full_name", )
 
 @admin.register(PassingStats)
 class PassingStatsAdmin(admin.ModelAdmin):

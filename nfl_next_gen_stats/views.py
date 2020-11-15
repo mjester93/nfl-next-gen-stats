@@ -9,7 +9,8 @@ def player_page(request, gsis_id=None):
     context = {
         'player': player,
         'title': player.full_name,
-        'passing_stats': player.passing_stats().order_by('season', 'week')
+        'passing_stats': player.passing_stats().order_by('season', 'week'),
+        'rushing_stats': player.rushing_stats().order_by('season', 'week'),
     }
 
     return render(request, 'nfl_next_gen_stats/player.html', context)
