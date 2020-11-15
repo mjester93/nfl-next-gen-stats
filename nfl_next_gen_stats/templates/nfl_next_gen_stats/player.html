@@ -1,4 +1,11 @@
 {% extends 'nfl_next_gen_stats/base.html' %}
 {% block content %}
-    <span>{{ player.full_name }}</span>
+    <div class="player-stats-header">
+        <h1>{{ player.full_name }} NGS Stats</h1>
+    </div>
+    <div class="player-stats-main">
+        <h2>Passing Stats</h2>
+        <h2>Rushing Stats</h2>
+        <h2>Receiving Stats</h2>
+    </div>
 {% endblock content %}
