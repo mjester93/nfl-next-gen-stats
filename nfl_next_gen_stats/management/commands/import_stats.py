@@ -5,6 +5,8 @@ import pandas as pd
 import requests
 import time
 
+NAME_COLUMNS = ['player_first_name', 'player_last_name', 'player_display_name', 'player_short_name', 'player_gsis_id']
+
 class Command(BaseCommand):
     help = 'Imports NGS from the github data page'
     
@@ -24,4 +26,7 @@ class Command(BaseCommand):
 
         #Give each row a unique index
         final_passing_data.reset_index(drop=True, inplace=True)
+
+        passing_players = final_passing_data[NAME_COLUMNS]
+        print(passing_players)
 

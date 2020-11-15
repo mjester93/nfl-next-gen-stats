@@ -6,7 +6,7 @@ class Player(models.Model):
     last_name = models.CharField(max_length=200)
     full_name = models.CharField(max_length=200)
     short_name = models.CharField(max_length=200)
-    gsis_id = models.CharField(max_length=20)
+    gsis_id = models.CharField(max_length=20, unique=True)
 
 
 class PassingStats(models.Model):
