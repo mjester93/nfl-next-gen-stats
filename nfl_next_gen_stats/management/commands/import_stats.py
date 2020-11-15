@@ -40,6 +40,8 @@ class Command(BaseCommand):
         # Renaming columns to match model
         players.columns = FINAL_NAME_COLUMNS
 
-        # Adding players to database
-        new_players = [Player(**vals) for vals in df.to_dict('records')]
+        # Adding players to database; if they exist, update them
+        new_players = [Player(**vals) for vals in players.to_dict('records')]
+        key_fields = ('gsis_id', )
+        ret = bulk_sync(new_models=players, filters=None, key_fields=key_fields, skip_deletes=True)
 
