@@ -5,8 +5,11 @@ import pandas as pd
 import requests
 import time
 
-NAME_COLUMNS = ['player_first_name', 'player_last_name', 'player_display_name', 'player_short_name', 'player_gsis_id']
-FINAL_NAME_COLUMNS = ['first_name', 'last_name', 'full_name', 'short_name', 'gsis_id']
+pd.set_option('display.max_columns', None)
+pd.set_option("max_rows", None)
+
+NAME_COLUMNS = ['first_name', 'last_name', 'full_name', 'short_name', 'gsis_id']
+PASS_STATS_TO_REMOVE = ['first_name', 'last_name', 'full_name', 'short_name']
 
 class Command(BaseCommand):
     help = 'Imports NGS from the github data page'
@@ -30,18 +33,34 @@ class Command(BaseCommand):
 
         #Give each row a unique index
         final_passing_data.reset_index(drop=True, inplace=True)
+        # Changing the column names
+        final_passing_data = final_passing_data.rename(
+            columns = {
+                "player_first_name": "first_name",
+                "player_last_name": "last_name",
+                "player_display_name": "full_name", 
+                "player_short_name": "short_name",
+                "player_gsis_id": "gsis_id",
+                "player_position": "position",
+                "team_abbr": "team",
+            }
+        )
 
-        passing_players = final_passing_data[NAME_COLUMNS].drop_duplicates(subset=['player_gsis_id'], keep='last')
+        # Getting all players
+        passing_players = final_passing_data[NAME_COLUMNS].drop_duplicates(subset=['gsis_id'], keep='last')
         
         # TODO COMBINE RUSHING AND RECEIVING PLAYERS 
         # TO GET A UNIQUE PLAYERS ACROSS ALL THREE
         players = passing_players
 
-        # Renaming columns to match model
-        players.columns = FINAL_NAME_COLUMNS
-
         # Adding players to database; if they exist, update them
         new_players = [Player(**vals) for vals in players.to_dict('records')]
         key_fields = ('gsis_id', )
-        ret = bulk_sync(new_models=players, filters=None, key_fields=key_fields, skip_deletes=True)
+        ret = bulk_sync(new_models=new_players, filters=None, key_fields=key_fields, skip_deletes=True)
+
+        # Adding passing stats to database; if they exist, update them
+        final_passing_data = final_passing_data.drop(columns=PASS_STATS_TO_REMOVE)
+        new_passing_data = [PassingStats(**vals) for vals in final_passing_data.to_dict('records')]
+        key_fields = ('gsis_id', 'season', 'week')
+        ret = bulk_sync(new_models=new_passing_data, filters=None, key_fields=key_fields, skip_deletes=True)
 
