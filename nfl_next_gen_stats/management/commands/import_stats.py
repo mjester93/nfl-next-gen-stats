@@ -6,16 +6,20 @@ import requests
 import time
 
 NAME_COLUMNS = ['player_first_name', 'player_last_name', 'player_display_name', 'player_short_name', 'player_gsis_id']
+FINAL_NAME_COLUMNS = ['first_name', 'last_name', 'full_name', 'short_name', 'gsis_id']
 
 class Command(BaseCommand):
     help = 'Imports NGS from the github data page'
     
     def handle(self, *args, **options):
         years = [2016, 2017, 2018, 2019, 2020]
+        final_passing_data = pd.DataFrame()
+        final_rushing_data = pd.DataFrame()
+        final_receiving_data = pd.DataFrame()
 
         for year in years:
             current_passing_data = pd.read_csv(
-                "https://github.com/mrcaseb/nfl-data/blob/master/data/ngs/ngs_" + year +"_passing.csv.gz?raw=True",
+                f"https://github.com/mrcaseb/nfl-data/blob/master/data/ngs/ngs_{year}_passing.csv.gz?raw=True",
                 compression='gzip', 
                 low_memory=False,
             )
@@ -27,6 +31,15 @@ class Command(BaseCommand):
         #Give each row a unique index
         final_passing_data.reset_index(drop=True, inplace=True)
 
-        passing_players = final_passing_data[NAME_COLUMNS]
-        print(passing_players)
+        passing_players = final_passing_data[NAME_COLUMNS].drop_duplicates(subset=['player_gsis_id'], keep='last')
+        
+        # TODO COMBINE RUSHING AND RECEIVING PLAYERS 
+        # TO GET A UNIQUE PLAYERS ACROSS ALL THREE
+        players = passing_players
+
+        # Renaming columns to match model
+        players.columns = FINAL_NAME_COLUMNS
+
+        # Adding players to database
+        new_players = [Player(**vals) for vals in df.to_dict('records')]
 
