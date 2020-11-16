@@ -3,6 +3,7 @@
     <div class="player-stats-header">
         {% if season %}
             <h1>{{ player.full_name }}'s {{ season }} NGS Stats</h1>
+            <p><a href="{% url 'player-page' player.gsis_id %}">Visit Career Stats</a></p>
         {% else %}
             <h1>{{ player.full_name }}'s Career NGS Stats</h1>
         {% endif %}
@@ -15,6 +16,9 @@
                 <thead class="text-center bg-info text-white">
                     <tr>
                         <th>Year</th>
+                        {% if season %}
+                            <th>Week</th>
+                        {% endif %}
                         <th>Pos</th>
                         <th>Team</th>
                         <th>Number</th>
@@ -66,13 +70,13 @@
                         </tr>
                     {% empty %}
                         <th>
-                            <td colspan="22">There are no passing stats for {{ player.full_name }}</td>
+                            <td colspan="25">There are no passing stats for {{ player.full_name }}</td>
                         </th>
                     {% endfor %}
                 </tbody>
             </table>
         
-            <p>Note: NGS webpage only shows players with a minumum passing attempts for that season. Please see the NGS website for more details.</p>
+            <p>Note: NGS webpage only shows players with a minumum passing attempts for that week/season. Please see the NGS website for more details.</p>
         </div>
 
         <div class="player-stats-rushing">
@@ -82,6 +86,9 @@
                 <thead class="text-center bg-info text-white">
                     <tr>
                         <th>Year</th>
+                        {% if season %}
+                            <th>Week</th>
+                        {% endif %}
                         <th>Pos</th>
                         <th>Team</th>
                         <th>Number</th>
@@ -119,13 +126,13 @@
                         </tr>
                     {% empty %}
                         <th>
-                            <td colspan="15">There are no rushing stats for {{ player.full_name }}</td>
+                            <td colspan="20">There are no rushing stats for {{ player.full_name }}</td>
                         </th>
                     {% endfor %}
                 </tbody>
             </table>
         
-            <p>Note: NGS webpage only shows players with a minumum rushing attempts for that season. Please see the NGS website for more details.</p>
+            <p>Note: NGS webpage only shows players with a minumum rushing attempts for that week/season. Please see the NGS website for more details.</p>
         </div>
 
         <div class="player-stats-receiving">
@@ -135,6 +142,9 @@
                 <thead class="text-center bg-info text-white">
                     <tr>
                         <th>Year</th>
+                        {% if season %}
+                            <th>Week</th>
+                        {% endif %}
                         <th>Pos</th>
                         <th>Team</th>
                         <th>Number</th>
@@ -156,10 +166,17 @@
                     {% for stat in receiving_stats %}
                         <tr>
                             <td>
-                                <a href="{% url 'player-season' player.gsis_id stat.season %}">
+                                {% if season %}
                                     {{ stat.season }}
-                                </a>
+                                {% else %}
+                                    <a href="{% url 'player-season' player.gsis_id stat.season %}">
+                                        {{ stat.season }}
+                                    </a>
+                                {% endif %}
                             </td>
+                            {% if season %}
+                                <td>{{ stat.week }}</td>
+                            {% endif %}
                             <td>{{ stat.position }}</td>
                             <td>{{ stat.team }}</td>
                             <td>{{ stat.player_jersey_number }}</td>
@@ -178,13 +195,13 @@
                         </tr>
                     {% empty %}
                         <th>
-                            <td colspan="15">There are no reciving stats for {{ player.full_name }}</td>
+                            <td colspan="20">There are no reciving stats for {{ player.full_name }}</td>
                         </th>
                     {% endfor %}
                 </tbody>
             </table>
         
-            <p>Note: NGS webpage only shows players with a minumum targets for that season. Please see the NGS website for more details.</p>
+            <p>Note: NGS webpage only shows players with a minumum targets for that week/season. Please see the NGS website for more details.</p>
         </div>
     </div>
 {% endblock content %}
