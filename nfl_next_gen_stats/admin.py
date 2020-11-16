@@ -14,3 +14,7 @@ class PassingStatsAdmin(admin.ModelAdmin):
 @admin.register(RushingStats)
 class RushingStatsAdmin(admin.ModelAdmin):
     list_display = ('gsis_id', 'season', 'week', )
+
+@admin.register(ReceivingStats)
+class ReceivingStatsAdmin(admin.ModelAdmin):
+    list_display = ('gsis_id', 'season', 'week', )
