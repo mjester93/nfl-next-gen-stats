@@ -14,8 +14,11 @@ class SearchResultsView(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('player')
-        object_list = Player.objects.filter(Q(full_name__icontains=query))
-        return object_list
+        if query:
+            object_list = Player.objects.filter(Q(full_name__icontains=query))
+            return object_list
+        else:
+            return None
     
 
 

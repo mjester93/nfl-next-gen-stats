@@ -45,7 +45,18 @@
                 <tbody class="text-center">
                     {% for stat in passing_stats %}
                         <tr>
-                            <td>{{ stat.season }}</td>
+                            <td>
+                                {% if season %}
+                                    {{ stat.season }}
+                                {% else %}
+                                    <a href="{% url 'player-season' player.gsis_id stat.season %}">
+                                        {{ stat.season }}
+                                    </a>
+                                {% endif %}
+                            </td>
+                            {% if season %}
+                                <td>{{ stat.week }}</td>
+                            {% endif %}
                             <td>{{ stat.position }}</td>
                             <td>{{ stat.team }}</td>
                             <td>{{ stat.player_jersey_number }}</td>
@@ -108,7 +119,18 @@
                 <tbody class="text-center">
                     {% for stat in rushing_stats %}
                         <tr>
-                            <td>{{ stat.season }}</td>
+                            <td>
+                                {% if season %}
+                                    {{ stat.season }}
+                                {% else %}
+                                    <a href="{% url 'player-season' player.gsis_id stat.season %}">
+                                        {{ stat.season }}
+                                    </a>
+                                {% endif %}
+                            </td>
+                            {% if season %}
+                                <td>{{ stat.week }}</td>
+                            {% endif %}
                             <td>{{ stat.position }}</td>
                             <td>{{ stat.team }}</td>
                             <td>{{ stat.player_jersey_number }}</td>
