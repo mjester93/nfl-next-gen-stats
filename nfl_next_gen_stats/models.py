@@ -14,6 +14,9 @@ class Player(models.Model):
     def rushing_stats(self):
         return RushingStats.objects.filter(gsis_id=self.gsis_id)
 
+    def receiving_stats(self):
+        return ReceivingStats.objects.filter(gsis_id=self.gsis_id)
+
     def __str__(self):
         return f"{self.full_name} ({self.gsis_id})"
 

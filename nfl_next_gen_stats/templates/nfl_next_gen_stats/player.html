@@ -128,6 +128,61 @@
             <p>Note: NGS webpage only shows players with a minumum rushing attempts for that season. Please see the NGS website for more details.</p>
         </div>
 
-        <h2>Receiving Stats</h2>
+        <div class="player-stats-receiving">
+            <h2>Receiving Stats</h2>
+            <!-- TODO: TURN INTO FLEXBOX -->
+            <table class="table table-sm">
+                <thead class="text-center bg-info text-white">
+                    <tr>
+                        <th>Year</th>
+                        <th>Pos</th>
+                        <th>Team</th>
+                        <th>Number</th>
+                        <th title="Average Cushion">CUSH</th>
+                        <th title="Average Separation">SEP</th>
+                        <th title="Average Intended Air Yards">IAY</th>
+                        <th title="Percent of Intended Air Yards">IAY%</th>
+                        <th title="Receptions">REC</th>
+                        <th title="Targets">TAR</th>
+                        <th title="Catch Percentage">CATCH%</th>
+                        <th title="Yards">Yards</th>
+                        <th title="Receiving Touchdowns">TD</th>
+                        <th title="Average YAC">YAC/R</th>
+                        <th title="Average xYAX">xYAX/R</th>
+                        <th title="Average YAC Above Expectation">+/-</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    {% for stat in receiving_stats %}
+                        {% if stat.week == 0%}
+                            <tr>
+                                <td>{{ stat.season }}</td>
+                                <td>{{ stat.position }}</td>
+                                <td>{{ stat.team }}</td>
+                                <td>{{ stat.player_jersey_number }}</td>
+                                <td>{{ stat.avg_cushion|floatformat:2 }}</td>
+                                <td>{{ stat.avg_separation|floatformat:2 }}</td>
+                                <td>{{ stat.avg_intended_air_yards|floatformat:2 }}</td>
+                                <td>{{ stat.percent_share_of_intended_air_yards|floatformat:2 }}%</td>
+                                <td>{{ stat.receptions }}</td>
+                                <td>{{ stat.targets }}</td>
+                                <td>{{ stat.catch_percentage|floatformat:2 }}%</td>
+                                <td>{{ stat.yards }}</td>
+                                <td>{{ stat.rec_touchdowns }}</td>
+                                <td>{{ stat.avg_yac|floatformat:2 }}</td>
+                                <td>{{ stat.avg_expected_yac|floatformat:2 }}</td>
+                                <td>{{ stat.avg_yac_above_expectation|floatformat:2 }}</td>
+                            </tr>
+                        {% endif %}
+                    {% empty %}
+                        <th>
+                            <td colspan="15">There are no reciving stats for {{ player.full_name }}</td>
+                        </th>
+                    {% endfor %}
+                </tbody>
+            </table>
+        
+            <p>Note: NGS webpage only shows players with a minumum targets for that season. Please see the NGS website for more details.</p>
+        </div>
     </div>
 {% endblock content %}
