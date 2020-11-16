@@ -1,0 +1,19 @@
+{% extends 'nfl_next_gen_stats/base.html' %}
+{% block content %}
+    <h1>NGS Player Searson</h1>
+    <div>
+        <p>Use the search bar below to search for a player by name. You can type in any part of a players name and then hit the submit button.</p>
+    </div>
+    <form action="{% url 'player-search' %}" method="get">
+        <input name="player" type="text" placeholder="Search for a player">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <h3>Results</h3>
+    <div class="player-results">
+        <ul>
+            {% for player in player_list %}
+                <li><a href="{% url 'player-page' player.gsis_id %}">{{ player.full_name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock content %}

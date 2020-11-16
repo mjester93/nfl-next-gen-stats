@@ -1,10 +1,22 @@
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
+from django.views.generic import ListView
 from .models import *
 
 
 def home(request):
     return render(request, 'nfl_next_gen_stats/home.html')
+
+
+class SearchResultsView(ListView):
+    model = Player
+    template_name = 'nfl_next_gen_stats/player-search.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('player')
+        object_list = Player.objects.filter(Q(full_name__icontains=query))
+        return object_list
+    
 
 
 def player_page(request, gsis_id=None, season=None):
