@@ -1,7 +1,11 @@
 {% extends 'nfl_next_gen_stats/base.html' %}
 {% block content %}
     <div class="player-stats-header">
-        <h1>{{ player.full_name }} NGS Stats</h1>
+        {% if season %}
+            <h1>{{ player.full_name }}'s {{ season }} NGS Stats</h1>
+        {% else %}
+            <h1>{{ player.full_name }}'s Career NGS Stats</h1>
+        {% endif %}
     </div>
     <div class="player-stats-main">
         <div class="player-stats-passing">
@@ -36,32 +40,30 @@
                 </thead>
                 <tbody class="text-center">
                     {% for stat in passing_stats %}
-                        {% if stat.week == 0%}
-                            <tr>
-                                <td>{{ stat.season }}</td>
-                                <td>{{ stat.position }}</td>
-                                <td>{{ stat.team }}</td>
-                                <td>{{ stat.player_jersey_number }}</td>
-                                <td>{{ stat.avg_time_to_throw|floatformat:2 }}</td>
-                                <td>{{ stat.avg_completed_air_yards|floatformat:2 }}</td>
-                                <td>{{ stat.avg_intended_air_yards|floatformat:2 }}</td>
-                                <td>{{ stat.avg_air_yards_differential|floatformat:2 }}</td>
-                                <td>{{ stat.aggressiveness|floatformat:2 }}</td>
-                                <td>{{ stat.avg_air_distance|floatformat:2 }}</td>
-                                <td>{{ stat.max_air_distance|floatformat:2 }}</td>
-                                <td>{{ stat.max_completed_air_distance|floatformat:2 }}</td>
-                                <td>{{ stat.avg_air_yards_to_sticks|floatformat:2 }}</td>
-                                <td>{{ stat.passer_rating|floatformat:2 }}</td>
-                                <td>{{ stat.attempts }}</td>
-                                <td>{{ stat.completions }}</td>
-                                <td>{{ stat.completion_percentage|floatformat:2 }}%</td>
-                                <td>{{ stat.expected_completion_percentage|floatformat:2 }}%</td>
-                                <td>{{ stat.completion_percentage_above_expectation|floatformat:2 }}%</td>
-                                <td>{{ stat.pass_yards }}</td>
-                                <td>{{ stat.interceptions }}</td>
-                                <td>{{ stat.pass_touchdowns }}</td>
-                            </tr>
-                        {% endif %}
+                        <tr>
+                            <td>{{ stat.season }}</td>
+                            <td>{{ stat.position }}</td>
+                            <td>{{ stat.team }}</td>
+                            <td>{{ stat.player_jersey_number }}</td>
+                            <td>{{ stat.avg_time_to_throw|floatformat:2 }}</td>
+                            <td>{{ stat.avg_completed_air_yards|floatformat:2 }}</td>
+                            <td>{{ stat.avg_intended_air_yards|floatformat:2 }}</td>
+                            <td>{{ stat.avg_air_yards_differential|floatformat:2 }}</td>
+                            <td>{{ stat.aggressiveness|floatformat:2 }}</td>
+                            <td>{{ stat.avg_air_distance|floatformat:2 }}</td>
+                            <td>{{ stat.max_air_distance|floatformat:2 }}</td>
+                            <td>{{ stat.max_completed_air_distance|floatformat:2 }}</td>
+                            <td>{{ stat.avg_air_yards_to_sticks|floatformat:2 }}</td>
+                            <td>{{ stat.passer_rating|floatformat:2 }}</td>
+                            <td>{{ stat.attempts }}</td>
+                            <td>{{ stat.completions }}</td>
+                            <td>{{ stat.completion_percentage|floatformat:2 }}%</td>
+                            <td>{{ stat.expected_completion_percentage|floatformat:2 }}%</td>
+                            <td>{{ stat.completion_percentage_above_expectation|floatformat:2 }}%</td>
+                            <td>{{ stat.pass_yards }}</td>
+                            <td>{{ stat.interceptions }}</td>
+                            <td>{{ stat.pass_touchdowns }}</td>
+                        </tr>
                     {% empty %}
                         <th>
                             <td colspan="22">There are no passing stats for {{ player.full_name }}</td>
@@ -98,25 +100,23 @@
                 </thead>
                 <tbody class="text-center">
                     {% for stat in rushing_stats %}
-                        {% if stat.week == 0%}
-                            <tr>
-                                <td>{{ stat.season }}</td>
-                                <td>{{ stat.position }}</td>
-                                <td>{{ stat.team }}</td>
-                                <td>{{ stat.player_jersey_number }}</td>
-                                <td>{{ stat.efficiency|floatformat:2 }}</td>
-                                <td>{{ stat.percent_attempts_gte_eight_defenders|floatformat:2 }}%</td>
-                                <td>{{ stat.avg_time_to_los|floatformat:2 }}</td>
-                                <td>{{ stat.rush_attempts }}</td>
-                                <td>{{ stat.rush_yards }}</td>
-                                <td>{{ stat.rush_touchdowns }}</td>
-                                <td>{{ stat.expected_rush_yards|floatformat:2 }}</td>
-                                <td>{{ stat.rush_yards_over_expected|floatformat:2 }}</td>
-                                <td>{{ stat.avg_rush_yards|floatformat:2 }}</td>
-                                <td>{{ stat.rush_yards_over_expected_per_att|floatformat:2 }}</td>
-                                <td>{% widthratio stat.rush_pct_over_expected 1 100 %}%</td>
-                            </tr>
-                        {% endif %}
+                        <tr>
+                            <td>{{ stat.season }}</td>
+                            <td>{{ stat.position }}</td>
+                            <td>{{ stat.team }}</td>
+                            <td>{{ stat.player_jersey_number }}</td>
+                            <td>{{ stat.efficiency|floatformat:2 }}</td>
+                            <td>{{ stat.percent_attempts_gte_eight_defenders|floatformat:2 }}%</td>
+                            <td>{{ stat.avg_time_to_los|floatformat:2 }}</td>
+                            <td>{{ stat.rush_attempts }}</td>
+                            <td>{{ stat.rush_yards }}</td>
+                            <td>{{ stat.rush_touchdowns }}</td>
+                            <td>{{ stat.expected_rush_yards|floatformat:2 }}</td>
+                            <td>{{ stat.rush_yards_over_expected|floatformat:2 }}</td>
+                            <td>{{ stat.avg_rush_yards|floatformat:2 }}</td>
+                            <td>{{ stat.rush_yards_over_expected_per_att|floatformat:2 }}</td>
+                            <td>{% widthratio stat.rush_pct_over_expected 1 100 %}%</td>
+                        </tr>
                     {% empty %}
                         <th>
                             <td colspan="15">There are no rushing stats for {{ player.full_name }}</td>
@@ -154,26 +154,28 @@
                 </thead>
                 <tbody class="text-center">
                     {% for stat in receiving_stats %}
-                        {% if stat.week == 0%}
-                            <tr>
-                                <td>{{ stat.season }}</td>
-                                <td>{{ stat.position }}</td>
-                                <td>{{ stat.team }}</td>
-                                <td>{{ stat.player_jersey_number }}</td>
-                                <td>{{ stat.avg_cushion|floatformat:2 }}</td>
-                                <td>{{ stat.avg_separation|floatformat:2 }}</td>
-                                <td>{{ stat.avg_intended_air_yards|floatformat:2 }}</td>
-                                <td>{{ stat.percent_share_of_intended_air_yards|floatformat:2 }}%</td>
-                                <td>{{ stat.receptions }}</td>
-                                <td>{{ stat.targets }}</td>
-                                <td>{{ stat.catch_percentage|floatformat:2 }}%</td>
-                                <td>{{ stat.yards }}</td>
-                                <td>{{ stat.rec_touchdowns }}</td>
-                                <td>{{ stat.avg_yac|floatformat:2 }}</td>
-                                <td>{{ stat.avg_expected_yac|floatformat:2 }}</td>
-                                <td>{{ stat.avg_yac_above_expectation|floatformat:2 }}</td>
-                            </tr>
-                        {% endif %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'player-season' player.gsis_id stat.season %}">
+                                    {{ stat.season }}
+                                </a>
+                            </td>
+                            <td>{{ stat.position }}</td>
+                            <td>{{ stat.team }}</td>
+                            <td>{{ stat.player_jersey_number }}</td>
+                            <td>{{ stat.avg_cushion|floatformat:2 }}</td>
+                            <td>{{ stat.avg_separation|floatformat:2 }}</td>
+                            <td>{{ stat.avg_intended_air_yards|floatformat:2 }}</td>
+                            <td>{{ stat.percent_share_of_intended_air_yards|floatformat:2 }}%</td>
+                            <td>{{ stat.receptions }}</td>
+                            <td>{{ stat.targets }}</td>
+                            <td>{{ stat.catch_percentage|floatformat:2 }}%</td>
+                            <td>{{ stat.yards }}</td>
+                            <td>{{ stat.rec_touchdowns }}</td>
+                            <td>{{ stat.avg_yac|floatformat:2 }}</td>
+                            <td>{{ stat.avg_expected_yac|floatformat:2 }}</td>
+                            <td>{{ stat.avg_yac_above_expectation|floatformat:2 }}</td>
+                        </tr>
                     {% empty %}
                         <th>
                             <td colspan="15">There are no reciving stats for {{ player.full_name }}</td>
