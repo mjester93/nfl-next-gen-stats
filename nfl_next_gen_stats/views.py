@@ -1,4 +1,5 @@
 from django.db.models import Q
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView
 from .models import *
@@ -19,7 +20,32 @@ class SearchResultsView(ListView):
             return object_list
         else:
             return None
-    
+
+
+def qb_ngs_api(request, season=None):
+    passing_queryset = PassingStats.objects.filter(week=0, season=season).values()
+
+    final = []
+    for p in passing_queryset:
+        final.append({
+            'player': Player.objects.get(gsis_id=p.get('gsis_id')).full_name,
+            'stats': p
+        })
+
+    return JsonResponse(final, safe=False)
+
+
+def wr_ngs_api(request, season=None, week=0):
+    receiving_queryset = ReceivingStats.objects.filter(week=week, season=season).values()
+
+    final = []
+    for p in receiving_queryset:
+        final.append({
+            'player': Player.objects.get(gsis_id=p.get('gsis_id')).full_name,
+            'stats': p
+        })
+
+    return JsonResponse(final, safe=False)
 
 
 def player_page(request, gsis_id=None, season=None):
