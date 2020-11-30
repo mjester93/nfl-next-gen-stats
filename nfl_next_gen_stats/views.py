@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView
 from .models import *
+import numpy as np
 
 
 def home(request):
@@ -55,8 +56,16 @@ def player_page(request, gsis_id=None, season=None):
     rushing_stats = player.rushing_stats().order_by('season', 'week')
     receiving_stats = player.receiving_stats().order_by('season', 'week')
 
+    pass_years = np.array(passing_stats.order_by('season').values_list('season', flat=True).distinct())
+    rush_years = np.array(rushing_stats.order_by('season').values_list('season', flat=True).distinct())
+    rec_years = np.array(receiving_stats.order_by('season').values_list('season', flat=True).distinct())
+
+    years = np.append(pass_years, rush_years)
+    years = np.append(years, rec_years)
+
     context = {
         'player': player,
+        'years': years
     }
 
     if season:

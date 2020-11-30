@@ -7,6 +7,13 @@
         {% else %}
             <h1>{{ player.full_name }}'s Career NGS Stats</h1>
         {% endif %}
+        <span style="display: block;"><strong>Team: </strong>{{ player.team }}</span>
+        <span style="display: block;"><strong>Position: </strong>{{ player.position }}</span>
+        <span style="display: block;"><strong>Years: </strong>
+            {% for year in years %}
+                <a href="{% url 'player-season' player.gsis_id year|floatformat:0 %}">{{ year|floatformat:0 }}</a>
+            {% endfor %}
+        </span>
     </div>
     <div class="player-stats-main">
         <div class="player-stats-passing">
