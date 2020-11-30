@@ -8,6 +8,7 @@ class Player(models.Model):
     short_name = models.CharField(max_length=200)
     gsis_id = models.CharField(max_length=20, unique=True)
     team = models.CharField(max_length=20, blank=True, null=True)
+    position = models.CharField(max_length=20, blank=True, null=True)
 
     def passing_stats(self):
         return PassingStats.objects.filter(gsis_id=self.gsis_id)
