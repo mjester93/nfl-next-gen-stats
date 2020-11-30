@@ -8,7 +8,7 @@ import time
 pd.set_option('display.max_columns', None)
 pd.set_option("max_rows", None)
 
-NAME_COLUMNS = ['first_name', 'last_name', 'full_name', 'short_name', 'gsis_id']
+NAME_COLUMNS = ['first_name', 'last_name', 'full_name', 'short_name', 'gsis_id', 'team', 'position']
 PASS_STATS_TO_REMOVE = ['first_name', 'last_name', 'full_name', 'short_name']
 RUSH_STATS_TO_REMOVE = ['first_name', 'last_name', 'full_name', 'short_name']
 REC_STATS_TO_REMOVE = ['first_name', 'last_name', 'full_name', 'short_name']
